@@ -1,0 +1,251 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DIFF
+    INTERSECT
+    UNION
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> expression LIGNE expression
+Rule 2     expression -> GET URL
+Rule 3     expression -> GET URL instruction
+Rule 4     expression -> GET NAME
+Rule 5     expression -> GET NAME instruction
+Rule 6     instruction -> instruction OR contrainte
+Rule 7     instruction -> instruction AND contrainte
+Rule 8     instruction -> contrainte
+Rule 9     contrainte -> CONTAINS NAME
+Rule 10    contrainte -> EXCLUDE NAME
+
+Terminals, with rules where they appear
+
+AND                  : 7
+CONTAINS             : 9
+DIFF                 : 
+EXCLUDE              : 10
+GET                  : 2 3 4 5
+INTERSECT            : 
+LIGNE                : 1
+NAME                 : 4 5 9 10
+OR                   : 6
+UNION                : 
+URL                  : 2 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+contrainte           : 6 7 8
+expression           : 1 1 0
+instruction          : 3 5 6 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . expression LIGNE expression
+    (2) expression -> . GET URL
+    (3) expression -> . GET URL instruction
+    (4) expression -> . GET NAME
+    (5) expression -> . GET NAME instruction
+
+    GET             shift and go to state 2
+
+    expression                     shift and go to state 1
+
+state 1
+
+    (0) S' -> expression .
+    (1) expression -> expression . LIGNE expression
+
+    LIGNE           shift and go to state 3
+
+
+state 2
+
+    (2) expression -> GET . URL
+    (3) expression -> GET . URL instruction
+    (4) expression -> GET . NAME
+    (5) expression -> GET . NAME instruction
+
+    URL             shift and go to state 4
+    NAME            shift and go to state 5
+
+
+state 3
+
+    (1) expression -> expression LIGNE . expression
+    (1) expression -> . expression LIGNE expression
+    (2) expression -> . GET URL
+    (3) expression -> . GET URL instruction
+    (4) expression -> . GET NAME
+    (5) expression -> . GET NAME instruction
+
+    GET             shift and go to state 2
+
+    expression                     shift and go to state 6
+
+state 4
+
+    (2) expression -> GET URL .
+    (3) expression -> GET URL . instruction
+    (6) instruction -> . instruction OR contrainte
+    (7) instruction -> . instruction AND contrainte
+    (8) instruction -> . contrainte
+    (9) contrainte -> . CONTAINS NAME
+    (10) contrainte -> . EXCLUDE NAME
+
+    LIGNE           reduce using rule 2 (expression -> GET URL .)
+    $end            reduce using rule 2 (expression -> GET URL .)
+    CONTAINS        shift and go to state 9
+    EXCLUDE         shift and go to state 10
+
+    instruction                    shift and go to state 7
+    contrainte                     shift and go to state 8
+
+state 5
+
+    (4) expression -> GET NAME .
+    (5) expression -> GET NAME . instruction
+    (6) instruction -> . instruction OR contrainte
+    (7) instruction -> . instruction AND contrainte
+    (8) instruction -> . contrainte
+    (9) contrainte -> . CONTAINS NAME
+    (10) contrainte -> . EXCLUDE NAME
+
+    LIGNE           reduce using rule 4 (expression -> GET NAME .)
+    $end            reduce using rule 4 (expression -> GET NAME .)
+    CONTAINS        shift and go to state 9
+    EXCLUDE         shift and go to state 10
+
+    instruction                    shift and go to state 11
+    contrainte                     shift and go to state 8
+
+state 6
+
+    (1) expression -> expression LIGNE expression .
+    (1) expression -> expression . LIGNE expression
+
+  ! shift/reduce conflict for LIGNE resolved as shift
+    $end            reduce using rule 1 (expression -> expression LIGNE expression .)
+    LIGNE           shift and go to state 3
+
+  ! LIGNE           [ reduce using rule 1 (expression -> expression LIGNE expression .) ]
+
+
+state 7
+
+    (3) expression -> GET URL instruction .
+    (6) instruction -> instruction . OR contrainte
+    (7) instruction -> instruction . AND contrainte
+
+    LIGNE           reduce using rule 3 (expression -> GET URL instruction .)
+    $end            reduce using rule 3 (expression -> GET URL instruction .)
+    OR              shift and go to state 12
+    AND             shift and go to state 13
+
+
+state 8
+
+    (8) instruction -> contrainte .
+
+    OR              reduce using rule 8 (instruction -> contrainte .)
+    AND             reduce using rule 8 (instruction -> contrainte .)
+    LIGNE           reduce using rule 8 (instruction -> contrainte .)
+    $end            reduce using rule 8 (instruction -> contrainte .)
+
+
+state 9
+
+    (9) contrainte -> CONTAINS . NAME
+
+    NAME            shift and go to state 14
+
+
+state 10
+
+    (10) contrainte -> EXCLUDE . NAME
+
+    NAME            shift and go to state 15
+
+
+state 11
+
+    (5) expression -> GET NAME instruction .
+    (6) instruction -> instruction . OR contrainte
+    (7) instruction -> instruction . AND contrainte
+
+    LIGNE           reduce using rule 5 (expression -> GET NAME instruction .)
+    $end            reduce using rule 5 (expression -> GET NAME instruction .)
+    OR              shift and go to state 12
+    AND             shift and go to state 13
+
+
+state 12
+
+    (6) instruction -> instruction OR . contrainte
+    (9) contrainte -> . CONTAINS NAME
+    (10) contrainte -> . EXCLUDE NAME
+
+    CONTAINS        shift and go to state 9
+    EXCLUDE         shift and go to state 10
+
+    contrainte                     shift and go to state 16
+
+state 13
+
+    (7) instruction -> instruction AND . contrainte
+    (9) contrainte -> . CONTAINS NAME
+    (10) contrainte -> . EXCLUDE NAME
+
+    CONTAINS        shift and go to state 9
+    EXCLUDE         shift and go to state 10
+
+    contrainte                     shift and go to state 17
+
+state 14
+
+    (9) contrainte -> CONTAINS NAME .
+
+    OR              reduce using rule 9 (contrainte -> CONTAINS NAME .)
+    AND             reduce using rule 9 (contrainte -> CONTAINS NAME .)
+    LIGNE           reduce using rule 9 (contrainte -> CONTAINS NAME .)
+    $end            reduce using rule 9 (contrainte -> CONTAINS NAME .)
+
+
+state 15
+
+    (10) contrainte -> EXCLUDE NAME .
+
+    OR              reduce using rule 10 (contrainte -> EXCLUDE NAME .)
+    AND             reduce using rule 10 (contrainte -> EXCLUDE NAME .)
+    LIGNE           reduce using rule 10 (contrainte -> EXCLUDE NAME .)
+    $end            reduce using rule 10 (contrainte -> EXCLUDE NAME .)
+
+
+state 16
+
+    (6) instruction -> instruction OR contrainte .
+
+    OR              reduce using rule 6 (instruction -> instruction OR contrainte .)
+    AND             reduce using rule 6 (instruction -> instruction OR contrainte .)
+    LIGNE           reduce using rule 6 (instruction -> instruction OR contrainte .)
+    $end            reduce using rule 6 (instruction -> instruction OR contrainte .)
+
+
+state 17
+
+    (7) instruction -> instruction AND contrainte .
+
+    OR              reduce using rule 7 (instruction -> instruction AND contrainte .)
+    AND             reduce using rule 7 (instruction -> instruction AND contrainte .)
+    LIGNE           reduce using rule 7 (instruction -> instruction AND contrainte .)
+    $end            reduce using rule 7 (instruction -> instruction AND contrainte .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for LIGNE in state 6 resolved as shift
