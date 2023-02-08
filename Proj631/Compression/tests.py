@@ -1,4 +1,4 @@
-from Classes.Class_Node import Node
+from src.Class_Node import Node
 
 
 

@@ -15,5 +15,10 @@ class Node:
 		if not self.left_child and not self.right_child:
 			return code
 
+	def __lt__(self, node):
+		return self.frequence < node.frequence
+
+	def __gt__(self, node):
+		return self.frequence > node.frequence
 		
 		
