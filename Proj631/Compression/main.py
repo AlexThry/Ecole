@@ -19,7 +19,7 @@ def add_nodes(node, graph):
 		add_nodes(node.right_child, graph)
 
 if __name__ == "__main__":
-	tree = Tree("donnees/textesimple.txt")
+	tree = Tree("Proj631/Compression/donnees/textesimple.txt")
 	visualize_tree(tree).render()
-	compresor = Compressor("donnees/textesimple.txt")
+	compresor = Compressor("Proj631/Compression/donnees/textesimple.txt")
 
