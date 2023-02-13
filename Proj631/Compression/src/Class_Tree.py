@@ -1,10 +1,13 @@
 from src.Class_File import File
 from src.Class_Node import Node
+import struct
 
 class Tree:
 	def __init__(self, file):
+		self.file = file
 		self.create_leaves(file)
 		self.root = self.create_root(self.leaves)
+
 
 	def create_leaves(self, file):
 		file = File(file)
@@ -39,9 +42,16 @@ class Tree:
 			del nodes[nodes.index(t1)]
 			del nodes[nodes.index(t2)]
 			return self.create_root(nodes)
-	def parcours_profondeur(self):
-		self.root.parcours_profondeur()
+	def parcours_profondeur(self, char):
+		return self.root.parcours_profondeur(char)
+
+
+
+
+
+
 
 if __name__ == "__main__":
 	tree = Tree("/Users/alexisthierry/Documents/Alex/Cours/code/GitHub/Ecole/Proj631/Compression/donnees/alice.txt")
-	print(tree.root.frequence)
+
+	# print(tree.root.frequence)

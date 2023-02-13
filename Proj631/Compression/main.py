@@ -1,6 +1,5 @@
 from src.Class_Tree import Tree
-from src.Class_Node import Node
-from src.Class_File import File
+from src.Class_Compressor import Compressor
 import graphviz
 
 def visualize_tree(tree):
@@ -20,8 +19,7 @@ def add_nodes(node, graph):
 		add_nodes(node.right_child, graph)
 
 if __name__ == "__main__":
-	tree = Tree("donnees/alice.txt")
-	
-	
-
+	tree = Tree("donnees/textesimple.txt")
 	visualize_tree(tree).render()
+	compresor = Compressor("donnees/textesimple.txt")
+

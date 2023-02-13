@@ -5,15 +5,18 @@ class Node:
 		self.left_child = left_child
 		self.right_child = right_child
 
-	def parcours_profondeur(self, code=""):
+	def parcours_profondeur(self, char, code=""):
+		if self.label == char:
+			return str(int(code, 2))
 		if self.left_child:
-			code += '0'
-			self.left_child.parcours_profondeur(code)
+			code_left = self.left_child.parcours_profondeur(char, code + "0")
+			if code_left:
+				return code_left
 		if self.right_child:
-			code += '1'
-			self.right_child.parcours_profondeur(code)
-		if not self.left_child and not self.right_child:
-			return code
+			return self.right_child.parcours_profondeur(char, code + "1")
+		return None
+
+
 
 	def __lt__(self, node):
 		return self.frequence < node.frequence
