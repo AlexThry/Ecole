@@ -1,6 +1,7 @@
 from src.Class_Tree import Tree
 from src.Class_Compressor import Compressor
 import graphviz
+import struct
 
 def visualize_tree(tree):
 	graph = graphviz.Graph(format="png")
@@ -19,7 +20,11 @@ def add_nodes(node, graph):
 		add_nodes(node.right_child, graph)
 
 if __name__ == "__main__":
-	tree = Tree("Proj631/Compression/donnees/textesimple.txt")
-	visualize_tree(tree).render()
-	compresor = Compressor("Proj631/Compression/donnees/textesimple.txt")
+	tree = Tree("donnees/textesimple.txt")
+	compresor = Compressor("donnees/textesimple.txt")
+	compresor.codage_huffman()
 
+	f = open("donnees/extraitalice.txt_compressed.bin", "r")
+	print(f.read())
+	# n = 16
+	# print(n.to_bytes((n.bit_length() + 7) // 8, "big"))

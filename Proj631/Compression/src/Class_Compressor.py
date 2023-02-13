@@ -26,11 +26,8 @@ class Compressor:
             for char in self.text:
                 int_char.append(self.dic[char])
             print(int_char)
-            binary_char = []
+            binary_char = ""
             for i in int_char:
-                if i < 256:
-                    new_file.write(bytearray(struct.pack("!B", i)))
-                elif i < 32768:
-                    new_file.write(bytearray(struct.pack("!h", i)))
-                else:
-                    new_file.write(bytearray(struct.pack("!i", i)))
+                new_file.write(i.to_bytes((i.bit_length() + 7) // 8, "big"))
+
+
