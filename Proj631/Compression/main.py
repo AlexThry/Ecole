@@ -20,11 +20,9 @@ def add_nodes(node, graph):
 		add_nodes(node.right_child, graph)
 
 if __name__ == "__main__":
-	tree = Tree("donnees/textesimple.txt")
+	tree = Tree("donnees/alice.txt")
 	compresor = Compressor("donnees/textesimple.txt")
 	compresor.codage_huffman()
-
-	f = open("donnees/extraitalice.txt_compressed.bin", "r")
-	print(f.read())
+	visualize_tree(tree).render()
 	# n = 16
 	# print(n.to_bytes((n.bit_length() + 7) // 8, "big"))

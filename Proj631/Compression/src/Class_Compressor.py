@@ -1,4 +1,6 @@
 from src.Class_Tree import Tree
+import bitarray
+import os
 import struct
 
 class Compressor:
@@ -17,17 +19,34 @@ class Compressor:
         dic = {}
         for char in self.text:
             if char not in dic.keys():
-                dic[char] = int(self.tree.parcours_profondeur(char))
-        self.dic = dict(sorted(dic.items(), key=lambda x: x[1]))
+                dic[char] = self.tree.parcours_profondeur(char)
+        self.dic = dic
+
+    def compresstion_rate(self):
+        old_file_size = os.path.getsize(self.file)
+        new_file_size = os.path.getsize(f"{self.file}_compressed.bin")
+        return 1 - new_file_size/old_file_size
+
+    def average_size(self, _list):
+        total = 0
+        for i in _list:
+            total += len(i)
+        return total/len(_list)
+
 
     def codage_huffman(self):
+        int_char = []
+        for char in self.text:
+            int_char.append(self.dic[char])
+        avg_size = self.average_size(int_char)
+        bit_char = []
+        for char in int_char:
+            for bit in char:
+                bit_char.append(int(bit))
+        bits = bitarray.bitarray(bit_char)
         with open(f"{self.file}_compressed.bin", "wb") as new_file:
-            int_char = []
-            for char in self.text:
-                int_char.append(self.dic[char])
-            print(int_char)
-            binary_char = ""
-            for i in int_char:
-                new_file.write(i.to_bytes((i.bit_length() + 7) // 8, "big"))
-
-
+            bits.tofile(new_file)
+        print("Done")
+        print("Compression rate : ", self.compresstion_rate())
+        print("Average character size (in bit) : ", avg_size)
+        print("file location : ", os.path.join(os.getcwd(), f"{self.file}_compressed.bin"))

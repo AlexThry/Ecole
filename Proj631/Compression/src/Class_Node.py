@@ -7,7 +7,7 @@ class Node:
 
 	def parcours_profondeur(self, char, code=""):
 		if self.label == char:
-			return str(int(code, 2))
+			return code
 		if self.left_child:
 			code_left = self.left_child.parcours_profondeur(char, code + "0")
 			if code_left:
