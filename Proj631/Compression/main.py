@@ -3,6 +3,8 @@ from src.Class_Compressor import Compressor
 import graphviz
 import struct
 
+
+# Fontctions pour visualiser l'arbre de compression
 def visualize_tree(tree):
 	graph = graphviz.Graph(format="png")
 	add_nodes(tree.root, graph)
@@ -20,7 +22,8 @@ def add_nodes(node, graph):
 		add_nodes(node.right_child, graph)
 
 if __name__ == "__main__":
-	tree = Tree("donnees/alice.txt")
-	compresor = Compressor("donnees/extraitalice.txt")
-	compresor.codage_huffman()
-	visualize_tree(tree).render()
+	# Création d'un objet de compression avec le fichier à compresser en paramètre
+	compressor = Compressor("donnees/extraitalice.txt")
+
+	# Compression du fichier en utilisant l'algorithme de Huffman
+	compressor.codage_huffman()

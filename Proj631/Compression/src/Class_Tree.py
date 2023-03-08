@@ -4,12 +4,21 @@ import struct
 
 class Tree:
 	def __init__(self, file):
+		"""
+		Arbre de compression
+		:param file: chemin vers le fichier à compresser
+		"""
 		self.file = file
 		self.create_leaves(file)
 		self.root = self.create_root(self.leaves)
 
 
 	def create_leaves(self, file):
+		"""
+		Méthode permettant de créer les feuilles de l'arbre à partir d'un fichier
+		:param file: Chemin vers le fichier
+		:return: None
+		"""
 		file = File(file)
 		dico = dict(file.frequence)
 		alphabet_nodes = []
@@ -20,6 +29,11 @@ class Tree:
 		self.leaves = alphabet_nodes
 
 	def get_two_smallest(self, nodes):
+		"""
+		Méthode permettant de récupérer les 2 noeuds ayant la plus petite fréquence dans une liste de noeuds
+		:param nodes: Liste de noeuds
+		:return: t1, t2 : les deux noeuds les plus petits (t1 < t2)
+		"""
 		t1 = nodes[0]
 		t2 = nodes[1]
 		if t1 > t2:
@@ -33,6 +47,11 @@ class Tree:
 		return t1, t2
 
 	def create_root(self, nodes):
+		"""
+		Méthode permettant de créer la racine de l'arbre
+		:param nodes: liste des feuilles de l'arbre
+		:return: Noeud racine
+		"""
 		if len(nodes) == 1:
 			return nodes[0]
 		else:
