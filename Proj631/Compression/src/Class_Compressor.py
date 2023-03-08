@@ -1,4 +1,5 @@
 from src.Class_Tree import Tree
+from src.Class_File import File
 import bitarray
 import os
 import struct
@@ -6,6 +7,7 @@ import struct
 class Compressor:
     def __init__(self, file):
         self.file = file
+        self.fileObj = File(file)
         self.tree = Tree(file)
         self.open_text(file)
         self.create_dict()
@@ -24,7 +26,7 @@ class Compressor:
 
     def compresstion_rate(self):
         old_file_size = os.path.getsize(self.file)
-        new_file_size = os.path.getsize(f"{self.file}_compressed.bin")
+        new_file_size = os.path.getsize(f"{self.file[:-4]}_compressed.bin")
         return 1 - new_file_size/old_file_size
 
     def average_size(self, _list):
@@ -35,6 +37,7 @@ class Compressor:
 
 
     def codage_huffman(self):
+        self.fileObj.write_frequence()
         int_char = []
         for char in self.text:
             int_char.append(self.dic[char])
@@ -44,7 +47,7 @@ class Compressor:
             for bit in char:
                 bit_char.append(int(bit))
         bits = bitarray.bitarray(bit_char)
-        with open(f"{self.file}_compressed.bin", "wb") as new_file:
+        with open(f"{self.file[:-4]}_compressed.bin", "wb") as new_file:
             bits.tofile(new_file)
         print("Done")
         print("Compression rate : ", self.compresstion_rate())

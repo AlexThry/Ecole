@@ -21,8 +21,6 @@ def add_nodes(node, graph):
 
 if __name__ == "__main__":
 	tree = Tree("donnees/alice.txt")
-	compresor = Compressor("donnees/textesimple.txt")
+	compresor = Compressor("donnees/extraitalice.txt")
 	compresor.codage_huffman()
 	visualize_tree(tree).render()
-	# n = 16
-	# print(n.to_bytes((n.bit_length() + 7) // 8, "big"))
