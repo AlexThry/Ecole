@@ -23,7 +23,11 @@ def add_nodes(node, graph):
 
 if __name__ == "__main__":
 	# Création d'un objet de compression avec le fichier à compresser en paramètre
-	compressor = Compressor("donnees/extraitalice.txt")
+	compressor1 = Compressor("donnees/alice.txt")
+	compressor2 = Compressor("donnees/extraitalice.txt")
+	compressor3 = Compressor("donnees/textesimple.txt")
 
 	# Compression du fichier en utilisant l'algorithme de Huffman
-	compressor.codage_huffman()
+	compressor1.codage_huffman()
+	compressor2.codage_huffman()
+	compressor3.codage_huffman()

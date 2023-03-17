@@ -1,0 +1,10 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	background-color: rgb(254, 251, 246);
+	font: 1em roboto light;
+}
+
+h1 {
+	font-size: 100px;
+}

@@ -61,6 +61,7 @@ class Tree:
 			del nodes[nodes.index(t1)]
 			del nodes[nodes.index(t2)]
 			return self.create_root(nodes)
+
 	def parcours_profondeur(self, char):
 		return self.root.parcours_profondeur(char)
 
