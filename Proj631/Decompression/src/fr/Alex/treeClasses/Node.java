@@ -13,6 +13,13 @@ public class Node {
         this.right_children = null;
     }
 
+    public Node(String label, int frequence, Node left_children, Node right_children) {
+        this.label = label;
+        this.frequence = frequence;
+        this.left_children = left_children;
+        this.right_children = right_children;
+    }
+
     @Override
     public String toString() {
         return "Node{" +
@@ -21,13 +28,6 @@ public class Node {
                 ", left_children=" + left_children +
                 ", right_children=" + right_children +
                 '}';
-    }
-
-    public Node(String label, int frequence, Node left_children, Node right_children) {
-        this.label = label;
-        this.frequence = frequence;
-        this.left_children = left_children;
-        this.right_children = right_children;
     }
 
     public boolean isLeaf() {
@@ -41,33 +41,37 @@ public class Node {
         return res;
     }
 
-    public String getChar(String binaryCode) {
-        Node node = this;
-        String res = new String();
-        if (node.isLeaf()) {
-            res =  node.getLabel();
+    public String getChars(String code) {
+        Node node = this; // commence à la racine
+        String label = null;
+        for (int i = 0; i < code.length(); i++) {
+            char c = code.charAt(i);
+            if (c == '0') {
+                node = node.left_children;
+            } else if (c == '1') {
+                node = node.right_children;
+            } else {
+                throw new IllegalArgumentException("Code binaire invalide : " + code);
+            }
+            if (node == null) {
+                throw new IllegalArgumentException("Code binaire invalide : " + code);
+            }
+            if (node.left_children == null && node.right_children == null) {
+                // on a atteint une feuille
+                if (label == null) {
+                    label = node.label;
+                } else {
+                    label += node.label;
+                }
+                node = this; // recommence à la racine
+            }
         }
-        else if (binaryCode.substring(0, 0).equals("0")) {
-            return  this.getChar(binaryCode.substring(1, binaryCode.length()), node.getLeft_children());
+        if (label == null) {
+            throw new IllegalArgumentException("Code binaire invalide : " + code);
         }
-        else if (binaryCode.substring(0, 0).equals("1")) {
-            return this.getChar(binaryCode.substring(1, binaryCode.length()), node.getRight_children());
-        }
-        return res;
+        return label;
     }
-    public String getChar(String binaryCode, Node node) {
-        String res = new String();
-        if (node.getLeft_children() == null && node.getRight_children() == null) {
-            res = node.getLabel();
-        }
-        else if (binaryCode.substring(0, 1).equals("0")) {
-            return  this.getChar(binaryCode.substring(1, binaryCode.length()), node.getLeft_children());
-        }
-        else if (binaryCode.substring(0, 1).equals("1")) {
-            return this.getChar(binaryCode.substring(1, binaryCode.length()), node.getRight_children());
-        }
-        return res;
-    }
+
 
     public String getLabel() {
         return label;

@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.FileWriter;
 import java.io.*;
 
 
@@ -52,21 +53,23 @@ public class File_Agent {
         return map;
     }
 
-    public String binaryToString() {
-        File file = new File(this.file_path);
-        StringBuilder sb = new StringBuilder();
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            int data;
-            while ((data = fileInputStream.read()) != -1) {
-                sb.append((char) data);
+    public String readBinaryFile() {
+        try (FileInputStream fis = new FileInputStream(this.file_path)) {
+            StringBuilder sb = new StringBuilder();
+            int b;
+            while ((b = fis.read()) != -1) {
+                String binaryString = Integer.toBinaryString(b);
+                sb.append(String.format("%8s", binaryString).replace(' ', '0'));
             }
-            fileInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            String binaryString = sb.toString();
+            return binaryString;
         }
-        String binaryString = sb.toString();
-        return binaryString;
 
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
+
+
 }

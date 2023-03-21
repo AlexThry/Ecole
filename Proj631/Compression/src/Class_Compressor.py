@@ -75,6 +75,7 @@ class Compressor:
             for bit in char:
                 bit_char.append(int(bit))
         bits = bitarray.bitarray(bit_char)
+        print(bits)
         try:
             os.mkdir(f"{os.getcwd()}/{self.file[:-4]}_compressed")
         except FileExistsError:

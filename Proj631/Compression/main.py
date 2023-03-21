@@ -28,6 +28,6 @@ if __name__ == "__main__":
 	compressor3 = Compressor("donnees/textesimple.txt")
 
 	# Compression du fichier en utilisant l'algorithme de Huffman
-	compressor1.codage_huffman()
+	# compressor1.codage_huffman()
 	compressor2.codage_huffman()
-	compressor3.codage_huffman()
+	# compressor3.codage_huffman()
