@@ -4,9 +4,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as ec
+from src.DBAgent import DBAgent
+from tqdm import tqdm
+import time
+import re
 
 class Page:
     def __init__(self, url):
+        self.dbagent = DBAgent()
         self.url = url
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
@@ -38,4 +43,47 @@ class Page:
 
     def writeElement(self, text, XPATH:str=None, CLASS_NAME:str=None, CSS_SELECTOR:str=None):
         self.findElement(XPATH, CLASS_NAME, CSS_SELECTOR).send_keys(text)
-
+        
+    def wait(self, duration:float):
+        time.sleep(duration)
+        
+        
+        
+        
+    def connection(self, login:str, password:str):
+        self.writeElement(login, CSS_SELECTOR='input[type="text"][id="user"][name="user"]')
+        self.writeElement(password, CSS_SELECTOR='input[type="password"][id="pass"][name="pass"]')
+        self.clickElement(CSS_SELECTOR='button[type="button"][id="tarteaucitronPersonalize"][onclick="tarteaucitron.userInterface.respondAll(true);"]')
+        self.clickElement(CSS_SELECTOR='input[class="submit"][type="submit"]')
+        
+    def getLinks(self):
+        self.driver.get("https://www.polytech.univ-smb.fr/intranet/scolarite/programmes-ingenieur.html")
+        self.clickElement(CSS_SELECTOR='button[name="tx_savfilters_default[submit]"][class="submit"]')
+        listeElements = self.findElements(CSS_SELECTOR='div[class="item "]')
+        
+        
+        linkList = []
+        for element in listeElements:
+            linkList.append(element.find_element(By.CSS_SELECTOR, 'a').get_attribute('href'))
+        return linkList[40:]
+    
+    def getInfosProfs(self, linkList):
+        profList = []
+        for link in tqdm(linkList):
+            self.driver.get(link)
+            self.wait(0.2)
+            prof = self.driver.find_elements(By.CSS_SELECTOR, 'div[class="item"]')[2].find_element(By.CSS_SELECTOR, 'div[class="value"]').text
+            profs = re.split("[,;]", prof)
+            
+            for prof in profs:
+                if (prof != ""):
+                    self.dbagent.addProf(prof.upper().strip())
+                module = self.findElement(CSS_SELECTOR='div[class="titleLabel"]').text
+                if (module != ": -"):
+                    self.dbagent.addModule(module.strip())
+                    self.dbagent.addParticipation(module.strip(), profs)
+                    
+        
+                
+            
+                
