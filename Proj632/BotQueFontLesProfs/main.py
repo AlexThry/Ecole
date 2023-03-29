@@ -11,7 +11,8 @@ import re
 
 
 if __name__ == "__main__":
-    print(os.path.join(os.getcwd(), "DB"))
+    login = input("Login Intranet :\n")
+    password = input("Password Intranet :\n")
     page = Page("https://www.polytech.univ-smb.fr/intranet/scolarite/programmes-ingenieur.html")
     page.load()
     page.connection("thierale", "xotgap-5byzwo-qaMqyb")

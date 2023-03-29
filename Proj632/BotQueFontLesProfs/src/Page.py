@@ -83,7 +83,7 @@ class Page:
                     self.dbagent.addModule(module.strip())
                     self.dbagent.addParticipation(module.strip(), profs)
                     
-        
+            
                 
             
                 
