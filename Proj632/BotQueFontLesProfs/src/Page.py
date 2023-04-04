@@ -63,13 +63,13 @@ class Page:
         
         
         linkList = []
-        for element in listeElements:
+        for element in tqdm(listeElements):
             linkList.append(element.find_element(By.CSS_SELECTOR, 'a').get_attribute('href'))
         return linkList[40:]
     
     def getInfosProfs(self, linkList):
         profList = []
-        for link in tqdm(linkList):
+        for link in tqdm(linkList, desc="Récupération des modules : "):
             self.driver.get(link)
             self.wait(0.2)
             prof = self.driver.find_elements(By.CSS_SELECTOR, 'div[class="item"]')[2].find_element(By.CSS_SELECTOR, 'div[class="value"]').text
@@ -84,18 +84,18 @@ class Page:
                     self.dbagent.addParticipation(module.strip(), profs)
                     
     def getArticlesProfs(self, profs:list):
-        for prof in profs:
-            prof1 = prof.split(" ")
-            url = f"https://hal.science/search/index?q={prof[0]}"
-            for i in prof1[1:]:
-                url += f"+{i}"
+        for prof in tqdm(profs, desc="Ajout des liens d'articles des profs : "):
+            url = f"https://hal.science/search/index?q='{prof}"
+            url += "'"
             self.driver.get(url)
             elements = self.driver.find_elements(By.CSS_SELECTOR, 'td[class="pl-4 pl-sm-0"]')
             links = []
             for element in elements:
-                links.append(element.find_element(By.CSS_SELECTOR, 'a').get_attribute("href"))
+                link = element.find_element(By.CSS_SELECTOR, 'a').get_attribute("href")
+                links.append(link)
                 idProf = self.dbagent.getProfId(prof)
-                print(idProf)
+            for link in links:
+                self.dbagent.addAEcrit(link, idProf)
 
 
 

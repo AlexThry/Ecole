@@ -8,8 +8,7 @@ class DBAgent:
         self.curs.execute("CREATE TABLE IF NOT EXISTS Profs (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(50))")
         self.curs.execute("CREATE TABLE IF NOT EXISTS Modules (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(50))")
         self.curs.execute("CREATE TABLE IF NOT EXISTS anime (idModule REFERENCES Modules(id), idProf REFERENCES Profs(id), PRIMARY KEY (idModule, idProf))")
-        self.curs.execute("CREATE TABLE IF NOT EXISTS aEcrit (idLien INTEGER REFERENCES Liens(id), idProf INTEGER REFERENCES Profs(id), PRIMARY KEY (idLien, idProf))")
-        self.curs.execute("CREATE TABLE IF NOT EXISTS Liens (idLien INTEGER PRIMARY KEY AUTOINCREMENT, lien VARCHAR(50))")
+        self.curs.execute("CREATE TABLE IF NOT EXISTS aEcrit (lien VARCHAR(256), idProf INTEGER REFERENCES Profs(id), PRIMARY KEY (lien, idProf))")
         self.conn.commit()
         
     def addProf(self, name:str):
@@ -39,12 +38,14 @@ class DBAgent:
         pass
 
 
-    def addLien(self, lien):
-        self.curs.execute("INSERT INTO Liens (lien) VALUES (?)", (lien,))
+    # def addLien(self, lien):
+    #     self.curs.execute("INSERT INTO Liens (lien) VALUES (?)", (lien,))
 
-    def addAEcrit(self, idLien, idProf):
+    def addAEcrit(self, lien, idProf):
         try:
-            self.curs.execute("INSERT INTO aEcrit (idLien, idProf) VALUES (?, ?)", (idLien, idProf))
+            if not self.curs.execute("SELECT idProf FROM aEcrit WHERE lien = ?", (lien,)).fetchall()[0][0]:
+                self.curs.execute("INSERT INTO aEcrit (lien, idProf) VALUES (?, ?)", (lien, idProf))
+                self.conn.commit()
         except:
             pass
     def getAllProfs(self):
@@ -55,5 +56,5 @@ class DBAgent:
         return profs
 
     def getProfId(self, prof):
-        self.curs.execute("SELECT id FROM Profs WHERE nom = ?", (prof,)).fetchall()
+        return self.curs.execute("SELECT id FROM Profs WHERE name = ?", (prof,)).fetchall()[0][0]
 

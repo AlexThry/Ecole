@@ -17,7 +17,7 @@ if __name__ == "__main__":
     # page.load()
     # page.connection("thierale", "xotgap-5byzwo-qaMqyb")
     # linkList = page.getLinks()
-    page.getArticlesProfs(page.dbagent.getAllProfs())
     # page.getInfosProfs(linkList)
+    page.getArticlesProfs(page.dbagent.getAllProfs())
 
 
