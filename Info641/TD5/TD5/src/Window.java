@@ -27,6 +27,7 @@ public class Window extends JFrame {
     private JList<String> toutous = new JList<>(listModelNomsToutous);
     private JLabel nomLabel = new JLabel();
     private JLabel nbPucesLabel = new JLabel();
+    private JScrollPane scrollPane = new JScrollPane();
 
 
     private ArrayList<String> listeToutous = new ArrayList<>();
@@ -64,8 +65,13 @@ public class Window extends JFrame {
         this.validate.setBounds(10, 70, 250, 20);
         this.window.add(validate);
 
-        this.toutous.setBounds(270, 10, 250, 80);
-        this.window.add(toutous);
+
+        //270, 10
+        //this.toutous.setBounds(270, 10, 250, 80);
+        this.scrollPane.setViewportView(toutous);
+        this.scrollPane.setBounds(270, 10, 250, 80);
+        this.window.add(scrollPane);
+
 
         this.nomSelect.setBounds(530, 10, 80, 20);
         this.window.add(nomSelect);

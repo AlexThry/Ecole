@@ -175,19 +175,25 @@ def get_last_user_agent() -> list:
 	:return: list
 	"""
 	driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-	driver.get("https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome")
-	user_agents = driver.find_elements(By.CLASS_NAME, 'code')
-	text_user_agents = []
-	for ua in user_agents:
-		text_user_agents.append(ua.text)
-	driver.close()
+	try:
+		driver.get("https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome")
+		WebDriverWait(driver, 20).until(ec.presence_of_all_elements_located((By.CLASS_NAME, "code")))
+		user_agents = driver.find_elements(By.CLASS_NAME, 'code')
+		text_user_agents = []
+		for ua in user_agents:
+			text_user_agents.append(ua.text)
+		driver.close()
+	except:
+		text_user_agents = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+							"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"]
+
 	return text_user_agents
 
 
 if __name__ == "__main__":
 	continue_ = True
 	while continue_:
-		res = input("1. Scrapper \n2. comparer les prix\n3. Quitter\n")
+		res = input("1. Scrapper \n2. Comparer les prix\n3. Quitter\n")
 		if res == "1":
 
 			# Récupération de la page max de récupération des données

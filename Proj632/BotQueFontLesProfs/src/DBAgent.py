@@ -8,6 +8,7 @@ class DBAgent:
         self.curs.execute("CREATE TABLE IF NOT EXISTS Profs (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(50))")
         self.curs.execute("CREATE TABLE IF NOT EXISTS Modules (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(50))")
         self.curs.execute("CREATE TABLE IF NOT EXISTS anime (idModule REFERENCES Modules(id), idProf REFERENCES Profs(id), PRIMARY KEY (idModule, idProf))")
+        self.curs.execute("CREATE TABLE IF NOT EXISTS aEcrit (lien VARCHAR(256), idProf INTEGER REFERENCES Profs(id), PRIMARY KEY (lien, idProf))")
         self.conn.commit()
         
     def addProf(self, name:str):
@@ -32,3 +33,28 @@ class DBAgent:
                     self.conn.commit()
                 except sqlite3.IntegrityError:
                     pass
+
+    def addArticle(self, prof:str, link:str):
+        pass
+
+
+    # def addLien(self, lien):
+    #     self.curs.execute("INSERT INTO Liens (lien) VALUES (?)", (lien,))
+
+    def addAEcrit(self, lien, idProf):
+        try:
+            if not self.curs.execute("SELECT idProf FROM aEcrit WHERE lien = ?", (lien,)).fetchall()[0][0]:
+                self.curs.execute("INSERT INTO aEcrit (lien, idProf) VALUES (?, ?)", (lien, idProf))
+                self.conn.commit()
+        except:
+            pass
+    def getAllProfs(self):
+        profs = []
+        _profs = self.curs.execute("SELECT name FROM Profs").fetchall()
+        for prof in _profs:
+            profs.append(prof[0])
+        return profs
+
+    def getProfId(self, prof):
+        return self.curs.execute("SELECT id FROM Profs WHERE name = ?", (prof,)).fetchall()[0][0]
+
