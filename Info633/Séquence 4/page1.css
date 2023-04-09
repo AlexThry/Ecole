@@ -13,7 +13,7 @@ body {
 .fond {
 	width: 800px;
 	min-height: 600px;
-	padding: 15px;
+	padding: 5px;
 	display: flex;
 	background-color: #DFDBE5;
 	background-image: url("assets/topography.svg");
@@ -35,11 +35,11 @@ body {
 .bloc {
 	display: block;
 	text-align: center;
-	margin: 15px;
-	backdrop-filter: blur(4px);
+	margin: 10px;
+	padding: 10px;
+	backdrop-filter: blur(2px);
 	border: solid 1px #c4bece;
 	border-radius: 20px;
-	padding: 10px;
 }
 
 .menu a {
