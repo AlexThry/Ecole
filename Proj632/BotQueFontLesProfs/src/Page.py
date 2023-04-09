@@ -82,8 +82,3 @@ class Page:
                 if (module != ": -"):
                     self.dbagent.addModule(module.strip())
                     self.dbagent.addParticipation(module.strip(), profs)
-                    
-            
-                
-            
-                
