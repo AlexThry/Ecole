@@ -81,9 +81,7 @@ class Page:
                 module = self.findElement(CSS_SELECTOR='div[class="titleLabel"]').text
                 if (module != ": -"):
                     self.dbagent.addModule(module.strip())
-<<<<<<< HEAD
                     self.dbagent.addParticipation(module.strip(), profs)
-=======
                     self.dbagent.addParticipation(module.strip(), profs)
                     
     def getArticlesProfs(self, profs:list):
@@ -107,4 +105,3 @@ class Page:
 
 
 
->>>>>>> 47999f57f021229ec6d891203af081fcbc2f90ab

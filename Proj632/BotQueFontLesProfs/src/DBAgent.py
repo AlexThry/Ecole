@@ -43,7 +43,7 @@ class DBAgent:
 
     def addAEcrit(self, lien, idProf):
         try:
-            if not self.curs.execute("SELECT idProf FROM aEcrit WHERE lien = ?", (lien,)).fetchall()[0][0]:
+            if not self.curs.execute("SELECT idProf FROM aEcrit WHERE lien = ?", (lien,)).fetchall():
                 self.curs.execute("INSERT INTO aEcrit (lien, idProf) VALUES (?, ?)", (lien, idProf))
                 self.conn.commit()
         except:
