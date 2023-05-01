@@ -27,4 +27,6 @@ public class Membre implements ConcertListener {
     public void addBillet(Concert concert) {
         this.billets.add(new Billet(concert));
     }
+
+
 }
