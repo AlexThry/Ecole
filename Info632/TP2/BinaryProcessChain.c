@@ -8,22 +8,23 @@ void create_binary_tree(int level, int max_level) {
 
     if (level < max_level) {
         if ((pid1 = fork()) == 0) {
+            // processus fils gauche
             printf("pid processus gauche : %d, processus parent : %d \n", getpid(), getppid());
             create_binary_tree(level+1, max_level);
             exit(0);
         }
 
         if ((pid2 = fork()) == 0) {
+            // processus fils droit
             printf("pid processus droite : %d, processus parent : %d \n", getpid(), getppid());
             create_binary_tree(level+1, max_level);
             exit(0);
         }
-        if (level == max_level-1){
-            system("pstree");
-        }
+        sleep(10);
         wait(NULL);
         wait(NULL);
     }
+
 }
 
 int main(int argc, char *argv[]) {
