@@ -1,0 +1,6 @@
+# ninja log v5
+1	70	1683900936998487316	build.ninja	cb9aa74ab82963e4
+0	167	1683900937171009411	CMakeFiles/Info632___TP3.dir/queue.c.o	77cc8dcb48fea885
+0	168	1683900937170987662	CMakeFiles/Info632___TP3.dir/producerconsumer.c.o	3011722ea8653275
+0	168	1683900937171052868	CMakeFiles/Info632___TP3.dir/ex1.c.o	e2db568ae2d7113
+0	168	1683900937170978829	CMakeFiles/Info632___TP3.dir/ex2.c.o	74aa56be878c8c75
